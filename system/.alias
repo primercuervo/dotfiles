@@ -1,0 +1,20 @@
+# Shortcuts
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias v='vim'
+alias rr='rm -rf'
+
+is-executable hub && eval "$(hub alias -s)" # alias git=hub
+
+alias ..="cd .."
+alias ...="cd ../../"
+alias ....="cd ../../../"
+alias .....="cd ../../../../"
+alias ......="cd ../../../../../"
+
+# List alias and functions
+alias lalias="alias | sed 's/=.*//'"
+alias lfunction="declare -f | grep '^[a-z].* ()' | sed 's/{$//'"
+
+alias quit="exit"
