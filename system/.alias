@@ -4,9 +4,6 @@ alias la='ls -A'
 alias l='ls -CF'
 alias v='vim'
 alias rr='rm -rf'
-
-is-executable hub && eval "$(hub alias -s)" # alias git=hub
-
 alias ..="cd .."
 alias ...="cd ../../"
 alias ....="cd ../../../"
@@ -18,3 +15,11 @@ alias lalias="alias | sed 's/=.*//'"
 alias lfunction="declare -f | grep '^[a-z].* ()' | sed 's/{$//'"
 
 alias quit="exit"
+
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+
+alias ll='ls -lF --color=auto'
+alias la='ls -alF --color=auto'
+alias ls='ls -F'

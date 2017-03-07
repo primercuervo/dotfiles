@@ -2,12 +2,46 @@
 # Author: Nicolas Cuervo
 # Based on install files from thoughtbot and a diversity of contributers
 
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >2; exit $ret' EXIT
-
 set -e
 
+#Using formatting for print statements. For this I use the ANSI escape codes.
+#you can choose different formatting of choice.
+
+#Black        0;30     Dark Gray     1;30
+#Red          0;31     Light Red     1;31
+#Green        0;32     Light Green   1;32
+#Brown/Orange 0;33     Yellow        1;33
+#Blue         0;34     Light Blue    1;34
+#Purple       0;35     Light Purple  1;35
+#Cyan         0;36     Light Cyan    1;36
+#Light Gray   0;37     White         1;37
+#Bold         1m       Underline     4m
+#Blink        5m       Revers color  7m
+#Dim          2m       Hidden        8m
+BLUE='\033[0;34m'
+RED='\033[1;31m'
+YELLOW='\033[1;33m'
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+END='\033[0m'
+
 fancy_echo(){
-  printf "\n%b\n" "$1"
+  printf "${BLUE}${BOLD}\n%b\n${END}" "$1"
+}
+
+warning_echo(){
+  printf "${YELLOW}\n%b\n${END}" "$1"
+}
+
+done_echo(){
+  printf "${GREEN}${BOLD}\n%b\n${END}" "$1"
+}
+# Checks if the file exists. If yes, deletes it
+delete_files(){
+    if [ -f $1 ]; then
+        warning_echo "Removing $1"
+        rm $1
+    fi
 }
 
 fancy_echo "Updating system packages ..."
@@ -20,6 +54,9 @@ fi
 
 sudo aptitude update
 
+fancy_echo "Installing git ..."
+  sudo aptitude install -y git
+
 fancy_echo "Installing vim ..."
   sudo aptitude install -y vim-gtk
 
@@ -28,6 +65,49 @@ fancy_echo "Installing curl ..."
 
 fancy_echo "Installing zsh ..."
   sudo aptitude install -y zsh
+
+fancy_echo "Installing meld ..."
+  sudo aptitude install -y meld
+
+fancy_echo "Installing cmake ..."
+  sudo aptitude install -y cmake
+
+fancy_echo "Setting up custom vim configuration ..."
+  if [ -d ~/.vim ]; then
+    warning_echo ".vim found! Creating backup file."
+    if [ -d ~/.vim.bak ]; then
+        rm -rf ~/.vim.bak
+    fi
+    mv ~/.vim ~/.vim.bak
+  fi
+
+  if [ -h ~/.vimrc ]; then
+    warning_echo ".vimrc found! Creating backup file."
+    if [ -h ~/.vimrc.bak ]; then
+        rm ~/.vimrc.bak
+    fi
+    mv ~/.vimrc ~/.vimrc.bak
+  fi
+
+  git clone https://github.com/primercuervo/vimfiles ~/.vim
+  ln -s ~/.vim/vimrc ~/.vimrc
+  sh ~/.vim/install.sh
+
+fancy_echo "Retrieving external fonts for Airline..."
+  wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+  wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+  mkdir -p ~/.config/fontconfig/conf.d/
+  mv PowerlineSymbols.otf ~/.fonts/
+  mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
+
+fancy_echo "Installing Adobe-fonts needed for Powerline9k..."
+  if [ ! -d ~/.fonts/adobe-fonts/source-code-pro]; then
+    git clone --depth 1 --branch release https://github.com/adobe-fonts/source-code-pro.git ~/.fonts/adobe-fonts/source-code-pro
+  fi
+  fc-cache -f -v ~/.fonts/adobe-fonts/source-code-pro
+
+fancy_echo "Setting up  clang completer for you-complete-me"
+  ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
 fancy_echo "Installing tmux ..."
   sudo aptitude install -y tmux
@@ -58,33 +138,47 @@ fi
 fancy_echo "Installing oh my zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
-fancy_echo "Setting up oh my zsh custom configuration..."
-  mv ~/.zshrc ~/.zshrc.orig
-  ln -s ~/.dotfiles/home/zshrc
+fancy_echo "Installing Powerline9k for Oh-My-ZSH..."
+  if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k]; then
+    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
+  fi
 
+fancy_echo "Installing pip..."
+  sudo aptitude install python-pip python-dev build-essential
 
-#fancy_echo "Installing dotfiles..."
-#fancy_echo "Checking current directory..."
-#DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+fancy_echo "Installing Awesome Terminal fonts for Powerlevel9k..."
+  if [ ! -d ~/.awesome_fonts]; then
+    git clone https://github.com/gabrielelana/awesome-terminal-fonts.git ~/.awesome_fonts
+  fi
+  cp ~/.awesome_fonts/build/* ~/.fonts
+  fc-cache -fv ~/.fonts
+  cp ~/.awesome_fonts/config/10-symbols.conf ~/.config/fontconfig/conf.d/
+
+fancy_echo "Installing dotfiles..."
+fancy_echo "Checking current dotfile directory..."
+DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Update dotfiles itself first
-#fancy_echo "Updating dotfiles from git..."
-#[ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
+fancy_echo "Updating dotfiles from git..."
+[ -d "$DOTFILES_DIR/.git" ] && git --work-tree="$DOTFILES_DIR" --git-dir="$DOTFILES_DIR/.git" pull origin master
 
-#fancy_echo "Deleting current dotfiles"
-#rm ~/.bashrc ~/.bash_profile ~/.gitconfig ~/.gitignore_global
+fancy_echo "Backing up current dotfiles, if any..."
+delete_files ~/.bashrc
+delete_files ~/.gitconfig
+delete_files ~/.gitignore_global
+delete_files ~/.zshrc
+delete_files ~/.alias
 
-#fancy_echo "Generating symbolic links..."
-#ln -sfv "$DOTFILES_DIR/home/.bash_profile" ~
-#ln -sfv "$DOTFILES_DIR/git/.gitconfig" ~
-#ln -sfv "$DOTFILES_DIR/git/.gitignore_global" ~
-#ln -sfv "$DOTFILES_DIR/home/.bashrc" ~
-
-#fancy_echo "Sourcing .bashrc"
-#source ~/.bashrc
+fancy_echo "Generating symbolic links..."
+ln -sfv "$DOTFILES_DIR/git/.gitconfig" ~
+ln -sfv "$DOTFILES_DIR/git/.gitignore_global" ~
+ln -sfv "$DOTFILES_DIR/home/.bashrc" ~
+ln -sfv "$DOTFILES_DIR/home/.zshrc" ~
+ln -sfv "$DOTFILES_DIR/system/.alias" ~
 
 fancy_echo "Changing main shell to zsh ..."
   chsh -s $(which zsh)
 
+unset RED BLUE BOLD YELLOW DOTFILES_DIR
 
-fancy_echo "Done!"
+done_echo "Done!"
