@@ -69,6 +69,7 @@ else
       install libcppunit-doc
       install python-lxml
       install python-requests
+      install python-apt
     elif [ -f /etc/redhat-release ]; then
       warning_echo "Fedora Detected! Using dnf ..."
       sudo dnf -y update
