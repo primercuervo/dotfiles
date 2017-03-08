@@ -15,17 +15,17 @@ Basically it does all the work for me on a new machine and lets it ready for me 
 - Updates system packages
 - Installs some dependencies for stuff that needs to be installed further up in the process
 - Installs stuff that I need in my day-by-day work, such as:
--- cpufrequtils
--- git
--- vim
--- curl
--- zsh
--- meld
--- cmake
--- oh-my-zsh
--- tmux
--- the silver searcher
--- python-pip
+    - cpufrequtils
+    - git
+    - vim
+    - curl
+    - zsh
+    - meld
+    - cmake
+    - oh-my-zsh
+    - tmux
+    - the silver searcher
+    - python-pip
 - Downloads and installs my custom VIM configuration: https://github.com/primercuervo/vimfiles
 - Downloads and installs fonts for vim-airline and Powerlevel9k
 - Swaps the ESC and capslock keys
