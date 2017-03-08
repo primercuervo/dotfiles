@@ -44,59 +44,95 @@ delete_files(){
     fi
 }
 
+install(){
+  if [ -f /etc/lsb-release ]; then
+      sudo aptitude install -y $1
+  elif [ -f /etc/redhat-release ]; then
+      sudo dnf install -y $1
+  else
+      warning_echo "Your OS distribution is not yet supported by this script"
+  fi
+}
+
 fancy_echo "Updating system packages ..."
 if command -v aptitude >/dev/null; then
     fancy_echo "Using aptitude ..."
 else
-    fancy_echo "Installing aptitude ..."
-    sudo apt-get install -y aptitude
+    if [ -f /etc/lsb-release ]; then
+      warning_echo "Ubuntu detected!"
+      warning_echo "Installing aptitude ..."
+      sudo apt-get install -y aptitude
+      sudo aptitude -y update
+      fancy_echo "Installing basic dependencies needed further in the process..."
+      install build-essential
+      install libcppunit-dev
+      install libcppunit-doc
+      install python-lxml
+      install python-requests
+    elif [ -f /etc/redhat-release ]; then
+      warning_echo "Fedora Detected! Using dnf ..."
+      sudo dnf -y update
+      fancy_echo "Installing basic dependencies needed further in the process..."
+      install python-devel
+      install python-lxml
+      install cppunit-devel
+      install gcc-c++
+      install util-linux-user
+    fi
 fi
 
-sudo aptitude update
+
+fancy_echo "Installing cpufrequtils ..."
+  install cpufrequtils
 
 fancy_echo "Installing git ..."
-  sudo aptitude install -y git
+  install git
 
 fancy_echo "Installing vim ..."
-  sudo aptitude install -y vim-gtk
+  install vim
 
 fancy_echo "Installing curl ..."
-  sudo aptitude install -y curl
+  install curl
 
 fancy_echo "Installing zsh ..."
-  sudo aptitude install -y zsh
+  install zsh
 
 fancy_echo "Installing meld ..."
-  sudo aptitude install -y meld
+  install meld
 
 fancy_echo "Installing cmake ..."
-  sudo aptitude install -y cmake
+  install cmake
 
-fancy_echo "Setting up custom vim configuration ..."
-  if [ -d ~/.vim ]; then
-    warning_echo ".vim found! Creating backup file."
-    if [ -d ~/.vim.bak ]; then
-        rm -rf ~/.vim.bak
-    fi
-    mv ~/.vim ~/.vim.bak
-  fi
+#fancy_echo "Setting up custom vim configuration ..."
+  #if [ -d ~/.vim ]; then
+    #warning_echo ".vim found! Creating backup file."
+    #if [ -d ~/.vim.bak ]; then
+        #rm -rf ~/.vim.bak
+    #fi
+    #mv ~/.vim ~/.vim.bak
+  #fi
 
-  if [ -h ~/.vimrc ]; then
-    warning_echo ".vimrc found! Creating backup file."
-    if [ -h ~/.vimrc.bak ]; then
-        rm ~/.vimrc.bak
-    fi
-    mv ~/.vimrc ~/.vimrc.bak
-  fi
+  #if [ -h ~/.vimrc ]; then
+    #warning_echo ".vimrc found! Creating backup file."
+    #if [ -h ~/.vimrc.bak ]; then
+        #rm ~/.vimrc.bak
+    #fi
+    #mv ~/.vimrc ~/.vimrc.bak
+  #fi
 
-  git clone https://github.com/primercuervo/vimfiles ~/.vim
-  ln -s ~/.vim/vimrc ~/.vimrc
-  sh ~/.vim/install.sh
+  #git clone https://github.com/primercuervo/vimfiles ~/.vim
+  #ln -s ~/.vim/vimrc ~/.vimrc
+  #sh ~/.vim/install.sh
 
 fancy_echo "Retrieving external fonts for Airline..."
   wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
   wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-  mkdir -p ~/.config/fontconfig/conf.d/
+  if [ ! -d ~/.config/fontconfig/conf.d/ ]; then
+    mkdir -p ~/.config/fontconfig/conf.d/
+  fi
+  if [ ! -d ~/.fonts/ ]; then
+    mkdir ~/.fonts/
+  fi
   mv PowerlineSymbols.otf ~/.fonts/
   mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 
@@ -106,18 +142,18 @@ fancy_echo "Installing Adobe-fonts needed for Powerline9k..."
   fi
   fc-cache -f -v ~/.fonts/adobe-fonts/source-code-pro
 
-fancy_echo "Setting up  clang completer for you-complete-me"
-  ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+#fancy_echo "Setting up  clang completer for you-complete-me"
+  #~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
 fancy_echo "Installing tmux ..."
-  sudo aptitude install -y tmux
+  install tmux
 
 fancy_echo "Swapping ESC and Capslock ..."
   dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:swapescape']"
 
 silver_searcher_from_source() {
     git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-    sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+    install automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
     sh /tmp/the_silver_searcher/build.sh
     cd /tmp/the_silver_searcher
     sh build.sh
@@ -126,28 +162,30 @@ silver_searcher_from_source() {
     rm -rf /tmp/the_silver_searcher
 }
 
-if ! command -v ag >/dev/null; then
-    fancy_echo "Installing The Silver Searcher ..."
-    if aptitude show silversearcher-ag &>/dev/null; then
-        sudo aptitude install silversearcher-ag
-    else
-        silver_searcher_from_source
-    fi
+fancy_echo "Installing The Silver Searcher ..."
+if [ -f /etc/lsb-release ]; then
+  if aptitude show silversearcher-ag &>/dev/null; then
+    sudo aptitude install -y silversearcher-ag
+  else
+    silver_searcher_from_source
+  fi
+elif [ -f /etc/redhat-release ]; then
+  sudo dnf install -y the_silver_searcher
 fi
 
 fancy_echo "Installing oh my zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 fancy_echo "Installing Powerline9k for Oh-My-ZSH..."
-  if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k]; then
+  if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]; then
     git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
   fi
 
 fancy_echo "Installing pip..."
-  sudo aptitude install python-pip python-dev build-essential
+  install python-pip python-dev build-essential
 
 fancy_echo "Installing Awesome Terminal fonts for Powerlevel9k..."
-  if [ ! -d ~/.awesome_fonts]; then
+  if [ ! -d ~/.awesome_fonts ]; then
     git clone https://github.com/gabrielelana/awesome-terminal-fonts.git ~/.awesome_fonts
   fi
   cp ~/.awesome_fonts/build/* ~/.fonts
