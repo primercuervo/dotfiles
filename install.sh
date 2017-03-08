@@ -103,26 +103,26 @@ fancy_echo "Installing meld ..."
 fancy_echo "Installing cmake ..."
   install cmake
 
-#fancy_echo "Setting up custom vim configuration ..."
-  #if [ -d ~/.vim ]; then
-    #warning_echo ".vim found! Creating backup file."
-    #if [ -d ~/.vim.bak ]; then
-        #rm -rf ~/.vim.bak
-    #fi
-    #mv ~/.vim ~/.vim.bak
-  #fi
+fancy_echo "Setting up custom vim configuration ..."
+  if [ -d ~/.vim ]; then
+    warning_echo ".vim found! Creating backup file."
+    if [ -d ~/.vim.bak ]; then
+        rm -rf ~/.vim.bak
+    fi
+    mv ~/.vim ~/.vim.bak
+  fi
 
-  #if [ -h ~/.vimrc ]; then
-    #warning_echo ".vimrc found! Creating backup file."
-    #if [ -h ~/.vimrc.bak ]; then
-        #rm ~/.vimrc.bak
-    #fi
-    #mv ~/.vimrc ~/.vimrc.bak
-  #fi
+  if [ -h ~/.vimrc ]; then
+    warning_echo ".vimrc found! Creating backup file."
+    if [ -h ~/.vimrc.bak ]; then
+        rm ~/.vimrc.bak
+    fi
+    mv ~/.vimrc ~/.vimrc.bak
+  fi
 
-  #git clone https://github.com/primercuervo/vimfiles ~/.vim
-  #ln -s ~/.vim/vimrc ~/.vimrc
-  #sh ~/.vim/install.sh
+  git clone https://github.com/primercuervo/vimfiles ~/.vim
+  ln -s ~/.vim/vimrc ~/.vimrc
+  sh ~/.vim/install.sh
 
 fancy_echo "Retrieving external fonts for Airline..."
   wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
@@ -142,8 +142,8 @@ fancy_echo "Installing Adobe-fonts needed for Powerline9k..."
   fi
   fc-cache -f -v ~/.fonts/adobe-fonts/source-code-pro
 
-#fancy_echo "Setting up  clang completer for you-complete-me"
-  #~/.vim/bundle/YouCompleteMe/install.py --clang-completer
+fancy_echo "Setting up  clang completer for you-complete-me"
+  ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
 fancy_echo "Installing tmux ..."
   install tmux
