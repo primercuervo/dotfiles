@@ -54,6 +54,12 @@ install(){
   fi
 }
 
+create_dir(){
+  if [ ! -d $1 ]; then
+    mkdir -p $1
+  fi
+}
+
 fancy_echo "Updating system packages ..."
 if command -v aptitude >/dev/null; then
     fancy_echo "Using aptitude ..."
@@ -128,12 +134,8 @@ fancy_echo "Setting up custom vim configuration ..."
 fancy_echo "Retrieving external fonts for Airline..."
   wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
   wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-  if [ ! -d ~/.config/fontconfig/conf.d/ ]; then
-    mkdir -p ~/.config/fontconfig/conf.d/
-  fi
-  if [ ! -d ~/.fonts/ ]; then
-    mkdir ~/.fonts/
-  fi
+  create_dir ~/.config/fontconfig/conf.d/
+  create_dir ~/.fonts/
   mv PowerlineSymbols.otf ~/.fonts/
   mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 
