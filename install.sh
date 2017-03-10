@@ -220,6 +220,10 @@ ln -sfv "$DOTFILES_DIR/system/alias" ~/.alias
 fancy_echo "Changing main shell to zsh ..."
   chsh -s $(which zsh)
 
+fancy_echo "fetching Scripts Repository..."
+  create_dir ~/git/
+  git clone https://github.com/primercuervo/scripts.git ~/git/scripts
+
 unset RED BLUE BOLD YELLOW DOTFILES_DIR
 
 done_echo "Done!"
