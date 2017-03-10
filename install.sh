@@ -76,6 +76,7 @@ else
       install python-lxml
       install python-requests
       install python-apt
+      install exuberant-ctags
     elif [ -f /etc/redhat-release ]; then
       warning_echo "Fedora Detected! Using dnf ..."
       sudo dnf -y update
@@ -84,6 +85,7 @@ else
       install python-lxml
       install cppunit-devel
       install gcc-c++
+      insatll ctags
       install util-linux-user
     fi
 fi

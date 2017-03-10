@@ -19,6 +19,7 @@ Basically it does all the work for me on a new machine and lets it ready for me 
     - git
     - gitk
     - vim
+    - exuberant-ctags
     - curl
     - zsh
     - meld
