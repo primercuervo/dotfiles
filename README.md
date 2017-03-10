@@ -23,6 +23,7 @@ Basically it does all the work for me on a new machine and lets it ready for me 
     - curl
     - zsh
     - meld
+    - pylint
     - cmake
     - oh-my-zsh
     - tmux
