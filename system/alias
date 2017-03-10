@@ -4,11 +4,11 @@ alias la='ls -A'
 alias l='ls -CF'
 alias v='vim'
 alias rr='rm -rf'
-alias ..="cd .."
-alias ...="cd ../../"
-alias ....="cd ../../../"
-alias .....="cd ../../../../"
-alias ......="cd ../../../../../"
+alias ..=" .."
+alias ...=" ../../"
+alias ....=" ../../../"
+alias .....=" ../../../../"
+alias ......=" ../../../../../"
 
 # List alias and functions
 alias lalias="alias | sed 's/=.*//'"
@@ -23,3 +23,10 @@ alias cp='cp -i'
 alias ll='ls -lF --color=auto'
 alias la='ls -alF --color=auto'
 alias ls='ls -F --color=auto'
+
+# Safety nets
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+# Do not delete / or prompt if deleting more than 3 files at a time
+alias rm='rm -I ---preserve-root'
