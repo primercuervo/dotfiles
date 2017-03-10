@@ -95,6 +95,8 @@ fancy_echo "Installing cpufrequtils ..."
 fancy_echo "Installing git ..."
   install git
 
+fancy_echo "Installing gitk ..."
+  install gitk
 fancy_echo "Installing vim ..."
   install vim
 

@@ -17,6 +17,7 @@ Basically it does all the work for me on a new machine and lets it ready for me 
 - Installs stuff that I need in my day-by-day work, such as:
     - cpufrequtils
     - git
+    - gitk
     - vim
     - curl
     - zsh
