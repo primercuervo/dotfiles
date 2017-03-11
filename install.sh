@@ -92,7 +92,7 @@ else
       install python-lxml
       install cppunit-devel
       install gcc-c++
-      insatll ctags
+      install ctags
       install util-linux-user
     fi
 fi
