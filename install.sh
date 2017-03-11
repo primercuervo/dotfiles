@@ -54,6 +54,13 @@ install(){
   fi
 }
 
+fedora_warning(){
+  if [ -f /etc/redhat-release ]; then
+      warning_echo "This application is known not to work well in Fedora"
+      warning_echo "It will be installed anyways..."
+  fi
+}
+
 create_dir(){
   if [ ! -d $1 ]; then
     mkdir -p $1
@@ -120,6 +127,8 @@ fancy_echo "Installing cmake ..."
 
 fancy_echo "Installing shutter ..."
   install shutter
+  fedora_warning
+
 fancy_echo "Setting up custom vim configuration ..."
   if [ -d ~/.vim ]; then
     warning_echo ".vim found! Creating backup file."
