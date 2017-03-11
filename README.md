@@ -25,6 +25,7 @@ Basically it does all the work for me on a new machine and lets it ready for me 
     - meld
     - pylint
     - cmake
+    - Shutter
     - oh-my-zsh
     - tmux
     - the silver searcher

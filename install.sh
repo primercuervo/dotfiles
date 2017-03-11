@@ -99,6 +99,7 @@ fancy_echo "Installing git ..."
 
 fancy_echo "Installing gitk ..."
   install gitk
+
 fancy_echo "Installing vim ..."
   install vim
 
@@ -117,6 +118,8 @@ fancy_echo "Installing pyling ..."
 fancy_echo "Installing cmake ..."
   install cmake
 
+fancy_echo "Installing shutter ..."
+  install shutter
 fancy_echo "Setting up custom vim configuration ..."
   if [ -d ~/.vim ]; then
     warning_echo ".vim found! Creating backup file."
