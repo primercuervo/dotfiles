@@ -125,6 +125,9 @@ fancy_echo "Installing pylint ..."
 fancy_echo "Installing gdb ..."
   install gdb
 
+fancy_echo "Installing htop ..."
+  install htop
+
 fancy_echo "Installing cmake ..."
   install cmake
 
