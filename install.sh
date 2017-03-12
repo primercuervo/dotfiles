@@ -131,6 +131,9 @@ fancy_echo "Installing htop ..."
 fancy_echo "Installing cmake ..."
   install cmake
 
+fancy_echo "Installing bpython ..."
+  install bpython
+
 fancy_echo "Installing shutter ..."
   install shutter
   fedora_warning

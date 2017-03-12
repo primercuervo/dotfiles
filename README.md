@@ -28,6 +28,7 @@ Basically it does all the work for me on a new machine and lets it ready for me 
     - htop
     - cmake
     - Shutter
+    - bpython
     - oh-my-zsh
     - tmux
     - the silver searcher
