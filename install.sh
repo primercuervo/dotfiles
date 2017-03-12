@@ -135,8 +135,8 @@ fancy_echo "Installing bpython ..."
   install bpython
 
 fancy_echo "Installing shutter ..."
-  install shutter
   fedora_warning
+  install shutter
 
 fancy_echo "Setting up custom vim configuration ..."
   if [ -d ~/.vim ]; then
@@ -168,7 +168,7 @@ fancy_echo "Retrieving external fonts for Airline..."
   mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 
 fancy_echo "Installing Adobe-fonts needed for Powerline9k..."
-  if [ ! -d ~/.fonts/adobe-fonts/source-code-pro]; then
+  if [ ! -d ~/.fonts/adobe-fonts/source-code-pro ]; then
     git clone --depth 1 --branch release https://github.com/adobe-fonts/source-code-pro.git ~/.fonts/adobe-fonts/source-code-pro
   fi
   fc-cache -f -v ~/.fonts/adobe-fonts/source-code-pro
