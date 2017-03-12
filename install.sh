@@ -119,8 +119,11 @@ fancy_echo "Installing zsh ..."
 fancy_echo "Installing meld ..."
   install meld
 
-fancy_echo "Installing pyling ..."
+fancy_echo "Installing pylint ..."
   install pylint
+
+fancy_echo "Installing gdb ..."
+  install gdb
 
 fancy_echo "Installing cmake ..."
   install cmake
