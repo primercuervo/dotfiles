@@ -122,6 +122,9 @@ fancy_echo "Installing meld ..."
 fancy_echo "Installing pylint ..."
   install pylint
 
+fancy_echo "Installing pylint3 ..."
+  install python3-pylint
+
 fancy_echo "Installing gdb ..."
   install gdb
 

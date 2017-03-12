@@ -24,6 +24,7 @@ Basically it does all the work for me on a new machine and lets it ready for me 
     - zsh
     - meld
     - pylint
+    - pylint3 (pylint for python3)
     - gbd
     - htop
     - cmake

@@ -16,6 +16,9 @@ alias lfunction="declare -f | grep '^[a-z].* ()' | sed 's/{$//'"
 
 alias quit="exit"
 
+# Pylint3
+alias pylint3="python3 -m pylint"
+
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
