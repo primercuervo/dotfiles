@@ -199,7 +199,7 @@ elif [ -f /etc/redhat-release ]; then
 fi
 
 fancy_echo "Installing oh my zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/primercuervo/oh-my-zsh/master/tools/install.sh)"
 
 fancy_echo "Installing Powerline9k for Oh-My-ZSH..."
   if [ ! -d ~/.oh-my-zsh/custom/themes/powerlevel9k ]; then
