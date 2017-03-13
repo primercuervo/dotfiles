@@ -19,7 +19,6 @@ set -e
 #Blink        5m       Revers color  7m
 #Dim          2m       Hidden        8m
 BLUE='\033[0;34m'
-RED='\033[1;31m'
 YELLOW='\033[1;33m'
 BOLD='\033[1m'
 GREEN='\033[0;32m'
@@ -38,17 +37,17 @@ done_echo(){
 }
 # Checks if the file exists. If yes, deletes it
 delete_files(){
-    if [ -f $1 ]; then
+    if [ -f "$1" ]; then
         warning_echo "Removing $1"
-        rm $1
+        rm "$1"
     fi
 }
 
-install(){
+inst(){
   if [ -f /etc/lsb-release ]; then
-      sudo aptitude install -y $1
+      sudo aptitude install -y "$1"
   elif [ -f /etc/redhat-release ]; then
-      sudo dnf install -y $1
+      sudo dnf install -y "$1"
   else
       warning_echo "Your OS distribution is not yet supported by this script"
   fi
@@ -62,8 +61,8 @@ fedora_warning(){
 }
 
 create_dir(){
-  if [ ! -d $1 ]; then
-    mkdir -p $1
+  if [ ! -d "$1" ]; then
+    mkdir -p "$1"
   fi
 }
 
@@ -77,69 +76,71 @@ else
       sudo apt-get install -y aptitude
       sudo aptitude -y update
       fancy_echo "Installing basic dependencies needed further in the process..."
-      install build-essential
-      install libcppunit-dev
-      install libcppunit-doc
-      install python-lxml
-      install python-requests
-      install python-apt
-      install exuberant-ctags
+      inst build-essential
+      inst libcppunit-dev
+      inst libcppunit-doc
+      inst python-requests
+      inst python-apt
+      inst exuberant-ctags
+      inst shellcheck
     elif [ -f /etc/redhat-release ]; then
       warning_echo "Fedora Detected! Using dnf ..."
       sudo dnf -y update
       fancy_echo "Installing basic dependencies needed further in the process..."
-      install python-devel
-      install python-lxml
-      install cppunit-devel
-      install gcc-c++
-      install ctags
-      install util-linux-user
+      inst python-devel
+      inst cppunit-devel
+      inst gcc-c++
+      inst ctags
+      inst ShellCheck
+      inst util-linux-user
     fi
 fi
 
+fancy_echo "Installing python-lxml"
+  inst python-lxml
 
 fancy_echo "Installing cpufrequtils ..."
-  install cpufrequtils
+  inst cpufrequtils
 
 fancy_echo "Installing git ..."
-  install git
+  inst git
 
 fancy_echo "Installing gitk ..."
-  install gitk
+  inst gitk
 
 fancy_echo "Installing vim ..."
-  install vim
+  inst vim
 
 fancy_echo "Installing curl ..."
-  install curl
+  inst curl
 
 fancy_echo "Installing zsh ..."
-  install zsh
+  inst zsh
 
 fancy_echo "Installing meld ..."
-  install meld
+  inst meld
 
 fancy_echo "Installing pylint ..."
-  install pylint
+  inst pylint
 
 fancy_echo "Installing pylint3 ..."
-  install python3-pylint
+  inst python3-pylint
 
 fancy_echo "Installing gdb ..."
-  install gdb
+  inst gdb
 
 fancy_echo "Installing htop ..."
-  install htop
+  inst htop
 
 fancy_echo "Installing cmake ..."
-  install cmake
+  inst cmake
 
 fancy_echo "Installing bpython ..."
-  install bpython
+  inst bpython
 
 fancy_echo "Installing shutter ..."
   fedora_warning
-  install shutter
+  inst shutter
 
 fancy_echo "Setting up custom vim configuration ..."
   if [ -d ~/.vim ]; then
@@ -180,14 +181,14 @@ fancy_echo "Setting up  clang completer for you-complete-me"
   ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
 
 fancy_echo "Installing tmux ..."
-  install tmux
+  inst tmux
 
 fancy_echo "Swapping ESC and Capslock ..."
   dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:swapescape']"
 
 silver_searcher_from_source() {
     git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-    install automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+    inst automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
     sh /tmp/the_silver_searcher/build.sh
     cd /tmp/the_silver_searcher
     sh build.sh
@@ -216,7 +217,7 @@ fancy_echo "Installing Powerline9k for Oh-My-ZSH..."
   fi
 
 fancy_echo "Installing pip..."
-  install python-pip python-dev build-essential
+  inst python-pip python-dev build-essential
 
 fancy_echo "Installing Awesome Terminal fonts for Powerlevel9k..."
   if [ ! -d ~/.awesome_fonts ]; then
@@ -249,7 +250,7 @@ ln -sfv "$DOTFILES_DIR/home/zshrc" ~/.zshrc
 ln -sfv "$DOTFILES_DIR/system/alias" ~/.alias
 
 fancy_echo "Changing main shell to zsh ..."
-  chsh -s $(which zsh)
+  chsh -s "$(which zsh)"
 
 unset RED BLUE BOLD YELLOW DOTFILES_DIR
 
