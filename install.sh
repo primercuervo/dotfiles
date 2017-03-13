@@ -55,8 +55,7 @@ inst(){
 
 fedora_warning(){
   if [ -f /etc/redhat-release ]; then
-      warning_echo "This application is known not to work well in Fedora"
-      warning_echo "It will be installed anyways..."
+      warning_echo "$1"
   fi
 }
 
@@ -141,7 +140,7 @@ fancy_echo "Installing bpython ..."
   inst bpython
 
 fancy_echo "Installing shutter ..."
-  fedora_warning
+  fedora_warning "This application is known not to work well in Fedora. It will be installed anyways..."
   inst shutter
 
 fancy_echo "Setting up custom vim configuration ..."
@@ -254,6 +253,12 @@ ln -sfv "$DOTFILES_DIR/system/alias" ~/.alias
 fancy_echo "Changing main shell to zsh ..."
   chsh -s "$(which zsh)"
 
-unset RED BLUE BOLD YELLOW DOTFILES_DIR
+fedora_warning "Bpython seems to complain about integer import,
+and that has to do with requests. In order to solve that, uninstall pip
+requests with pip and install again with RPM
+
+sudo pip uninstall requests
+sudo dnf install -y python2-requests"
+unset BLUE BOLD YELLOW DOTFILES_DIR
 
 done_echo "Done!"
