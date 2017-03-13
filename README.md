@@ -35,6 +35,7 @@ Basically it does all the work for me on a new machine and lets it ready for me 
     - tmux
     - the silver searcher
     - python-pip
+    - python3-pyqt4
 - Downloads and installs my custom VIM configuration: https://github.com/primercuervo/vimfiles
 - Downloads and installs fonts for vim-airline and Powerlevel9k
 - Swaps the ESC and capslock keys

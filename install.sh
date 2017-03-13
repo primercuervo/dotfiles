@@ -81,6 +81,7 @@ else
       inst libcppunit-doc
       inst python-requests
       inst python-apt
+      inst python3-pyqt4
       inst exuberant-ctags
       inst shellcheck
     elif [ -f /etc/redhat-release ]; then
@@ -88,6 +89,7 @@ else
       sudo dnf -y update
       fancy_echo "Installing basic dependencies needed further in the process..."
       inst python-devel
+      inst python3-PyQt4
       inst cppunit-devel
       inst gcc-c++
       inst ctags
