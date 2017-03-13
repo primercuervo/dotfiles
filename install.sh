@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 # Author: Nicolas Cuervo
 # Based on install files from thoughtbot and a diversity of contributers
 
