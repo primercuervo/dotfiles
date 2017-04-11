@@ -121,12 +121,6 @@ fancy_echo "Installing zsh ..."
 fancy_echo "Installing meld ..."
   inst meld
 
-fancy_echo "Installing pylint ..."
-  inst pylint
-
-fancy_echo "Installing pylint3 ..."
-  inst python3-pylint
-
 fancy_echo "Installing gdb ..."
   inst gdb
 
@@ -219,6 +213,15 @@ fancy_echo "Installing Powerline9k for Oh-My-ZSH..."
 
 fancy_echo "Installing pip..."
   inst python-pip python-dev build-essential
+
+fancy_echo "Installing pip..."
+  inst python3-pip
+
+fancy_echo "Installing pylint ..."
+  sudo pip install --upgrade pylint
+
+fancy_echo "Installing pylint3 ..."
+  sudo pip3 install --upgrade pylint
 
 fancy_echo "Installing Awesome Terminal fonts for Powerlevel9k..."
   if [ ! -d ~/.awesome_fonts ]; then
