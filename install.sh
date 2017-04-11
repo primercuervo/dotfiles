@@ -245,6 +245,7 @@ delete_files ~/.gitconfig
 delete_files ~/.gitignore_global
 delete_files ~/.zshrc
 delete_files ~/.alias
+delete_files ~/.pylintrc
 
 fancy_echo "Generating symbolic links..."
 ln -sfv "$DOTFILES_DIR/git/gitconfig" ~/.gitconfig
@@ -252,6 +253,7 @@ ln -sfv "$DOTFILES_DIR/git/gitignore_global" ~/.gitignore_global
 ln -sfv "$DOTFILES_DIR/home/bashrc" ~/.bashrc
 ln -sfv "$DOTFILES_DIR/home/zshrc" ~/.zshrc
 ln -sfv "$DOTFILES_DIR/system/alias" ~/.alias
+ln -sfv "$DOTFILES_DIR/system/pylintrc" ~/.pylintrc
 
 fancy_echo "Changing main shell to zsh ..."
   chsh -s "$(which zsh)"
