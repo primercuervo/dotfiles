@@ -121,12 +121,6 @@ fancy_echo "Installing zsh ..."
 fancy_echo "Installing meld ..."
   inst meld
 
-fancy_echo "Installing pylint ..."
-  inst pylint
-
-fancy_echo "Installing pylint3 ..."
-  inst python3-pylint
-
 fancy_echo "Installing gdb ..."
   inst gdb
 
@@ -220,6 +214,15 @@ fancy_echo "Installing Powerline9k for Oh-My-ZSH..."
 fancy_echo "Installing pip..."
   inst python-pip python-dev build-essential
 
+fancy_echo "Installing pip..."
+  inst python3-pip
+
+fancy_echo "Installing pylint ..."
+  sudo pip install --upgrade pylint
+
+fancy_echo "Installing pylint3 ..."
+  sudo pip3 install --upgrade pylint
+
 fancy_echo "Installing Awesome Terminal fonts for Powerlevel9k..."
   if [ ! -d ~/.awesome_fonts ]; then
     git clone https://github.com/gabrielelana/awesome-terminal-fonts.git ~/.awesome_fonts
@@ -242,6 +245,7 @@ delete_files ~/.gitconfig
 delete_files ~/.gitignore_global
 delete_files ~/.zshrc
 delete_files ~/.alias
+delete_files ~/.pylintrc
 
 fancy_echo "Generating symbolic links..."
 ln -sfv "$DOTFILES_DIR/git/gitconfig" ~/.gitconfig
@@ -249,6 +253,7 @@ ln -sfv "$DOTFILES_DIR/git/gitignore_global" ~/.gitignore_global
 ln -sfv "$DOTFILES_DIR/home/bashrc" ~/.bashrc
 ln -sfv "$DOTFILES_DIR/home/zshrc" ~/.zshrc
 ln -sfv "$DOTFILES_DIR/system/alias" ~/.alias
+ln -sfv "$DOTFILES_DIR/system/pylintrc" ~/.pylintrc
 
 fancy_echo "Changing main shell to zsh ..."
   chsh -s "$(which zsh)"
