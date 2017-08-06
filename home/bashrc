@@ -67,3 +67,7 @@ fi
 if [ -f ~/.alias ]; then
     source ~/.alias
 fi
+
+# added by Anaconda3 4.4.0 installer
+export PATH="/home/cuervo/anaconda3/bin:$PATH"
+
