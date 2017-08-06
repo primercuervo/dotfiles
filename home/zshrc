@@ -55,7 +55,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(git gitfast git-extras pep8 tmux sudo)
 
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status nvm rvm background_jobs ram battery time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status anaconda virtualenv  background_jobs ram battery time)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
 source $ZSH/oh-my-zsh.sh
