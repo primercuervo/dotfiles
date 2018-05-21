@@ -30,6 +30,7 @@
     st = status
     stat = status
     ci = commit
+    cm = commit -m
     br = branch
     co = checkout
     cr = clone --recursive
