@@ -81,6 +81,7 @@ else
       inst python-requests
       inst python-apt
       inst python3-pyqt4
+      inst python3-tk
       inst exuberant-ctags
       inst shellcheck
     elif [ -f /etc/redhat-release ]; then
@@ -172,9 +173,6 @@ fancy_echo "Installing Adobe-fonts needed for Powerline9k..."
   fi
   fc-cache -f -v ~/.fonts/adobe-fonts/source-code-pro
 
-fancy_echo "Setting up  clang completer for you-complete-me"
-  ~/.vim/bundle/YouCompleteMe/install.py --clang-completer
-
 fancy_echo "Installing tmux ..."
   inst tmux
 
@@ -216,6 +214,9 @@ fancy_echo "Installing pip..."
 
 fancy_echo "Installing pip..."
   inst python3-pip
+
+fancy_echo "Updating setuptools ..."
+  sudo pip install --upgrade setuptools
 
 fancy_echo "Installing pylint ..."
   sudo pip install --upgrade pylint
@@ -264,6 +265,30 @@ requests with pip and install again with RPM
 
 sudo pip uninstall requests
 sudo dnf install -y python2-requests"
+
+fancy_echo "Installing clang-6 for YCM ..."
+  sudo apt-get remove libclang*
+  inst clang-6.0
+  inst clant-format-6.0
+  sudo update-alternatives --remove-all clang
+  sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-6.0 90 --slave /usr/bin/clang++ clang++ /usr/bin/gclang++-6.0
+  sudo update-alternatives --remove-all clang-format
+  sudo update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-6.0 90
+
+fancy_echo "Updating gcc to a newer version..."
+# http://tuxamito.com/wiki/index.php/Installing_newer_GCC_versions_in_Ubuntu
+  sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  sudo apt-get update
+  inst gcc g++ gcc-5 g++-5 gcc-6 g++-6 gcc-7 g++-7
+  sudo update-alternatives --remove-all gcc
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90 --slave /usr/bin/g++ g++ /usr/bin/g++-5
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 80 --slave /usr/bin/g++ g++ /usr/bin/g++-6
+  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+  sudo update-alternatives --set gcc /usr/bin/gcc-7
+
+fancy_echo "Setting up  clang completer for you-complete-me"
+  ~/.vim/bundle/YouCompleteMe/install.py --clang-completer --system-libclang
+
 unset BLUE BOLD YELLOW DOTFILES_DIR
 
 done_echo "Done!"
