@@ -4,3 +4,4 @@
 *.pyc
 *.un~
 *.ipynb_checkpoints
+.idea
