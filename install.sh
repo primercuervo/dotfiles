@@ -159,6 +159,11 @@ fancy_echo "Setting up custom vim configuration ..."
   ln -s ~/.vim/vimrc ~/.vimrc
   sh ~/.vim/install.sh
 
+fancy_echo "Creating vim working directories..."
+  create_dir ~/.backup
+  create_dir ~/.swp
+  create_dir ~/.undo
+
 fancy_echo "Retrieving external fonts for Airline..."
   wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
   wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf

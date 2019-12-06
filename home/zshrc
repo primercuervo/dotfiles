@@ -97,3 +97,11 @@ if [ -f ~/.alias ]; then
     source ~/.alias
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+nhistory (){
+    words=()
+    for v in "$@"; do;
+        words+="| grep $v"
+    done
+    eval "history ${words}"
+}
