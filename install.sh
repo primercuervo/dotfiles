@@ -79,6 +79,7 @@ else
       inst libcppunit-dev
       inst libcppunit-doc
       inst python-requests
+      inst python-dev
       inst python-apt
       inst python3-pyqt4
       inst python3-tk
