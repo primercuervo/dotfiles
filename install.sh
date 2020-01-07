@@ -259,6 +259,7 @@ ln -sfv "$DOTFILES_DIR/git/gitconfig" ~/.gitconfig
 ln -sfv "$DOTFILES_DIR/git/gitignore_global" ~/.gitignore_global
 ln -sfv "$DOTFILES_DIR/home/bashrc" ~/.bashrc
 ln -sfv "$DOTFILES_DIR/home/zshrc" ~/.zshrc
+ln -sfv "$DOTFILES_DIR/home/tmux.conf" ~/.tmux.conf
 ln -sfv "$DOTFILES_DIR/system/alias" ~/.alias
 ln -sfv "$DOTFILES_DIR/system/pylintrc" ~/.pylintrc
 
