@@ -68,7 +68,9 @@ if [ -f ~/.alias ]; then
     source ~/.alias
 fi
 
-# added by Anaconda3 4.4.0 installer
-export PATH="/home/cuervo/anaconda3/bin:$PATH"
+if [ -f ~/.profile ]; then
+    source ~/.alias
+fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+. "$HOME/.cargo/env"
